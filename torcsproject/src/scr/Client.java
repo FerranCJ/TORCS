@@ -1,7 +1,10 @@
 
 package scr;
 
+import java.io.IOException;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import scr.Controller.Stage;
 
@@ -37,8 +40,14 @@ public class Client {
 		parseParameters(args);
 		SocketHandler mySocket = new SocketHandler(host, port, verbose);
 		String inMsg;
-
+                
 		Controller driver = load(args[0]);
+                DeadSimpleSoloController driverCast= (DeadSimpleSoloController)driver;
+            try {
+                driverCast.carregaFitxers("Mapa1.txt", "accelerar.fcl");
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
 		driver.setStage(stage);
 		driver.setTrackName(trackName);
 		
